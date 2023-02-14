@@ -1,0 +1,284 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+     "title": "Introduction to SOLID",
+     "description": "This is an API for learning SOLID",
+     "version": "1.0.0",
+     "contact": {
+         "email": "ueapppaa@hotmail.com"
+     }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email":{
+                                        "type": "string"
+                                    }                                
+                                },
+                                "example": {
+                                    "name": "Henrique Sydney",
+                                    "email": "email.henrique@hotmail.com"    
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {                               
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Henrique Sydney",
+                                        "email": "email.henrique@hotmail.com",  
+                                        "id": "0f7141ce-cc53-4527-8710-53d883dc884b",
+                                        "admin": false,
+                                        "created_at": "2023-02-13T22:35:00.992Z"  ,
+                                        "updated_at": "2023-02-13T22:35:00.992Z"  
+                                    }                                
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Email already been used by another user"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["User"],
+                "summary": "List all users",
+                "description": "List all users - somente usuário admin pode acessar",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                   
+                    }
+                ],            
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "string"
+                                            },
+                                            "admin": {
+                                                "type": "boolean"
+                                            },
+                                            "created_at": {
+                                                "type": "string"
+                                            },
+                                            "updated_at": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "name": "Henrique Sydney",
+                                            "email": "email.henrique@hotmail.com",  
+                                            "id": "0f7141ce-cc53-4527-8710-53d883dc884b",
+                                            "admin": false,
+                                            "created_at": "2023-02-13T22:35:00.992Z"  ,
+                                            "updated_at": "2023-02-13T22:35:00.992Z"  
+                                        },
+                                        {
+                                            "name": "Jucelino Sydney",
+                                            "email": "email.Jucelino@hotmail.com",  
+                                            "id": "0f7141ce-cc53-4527-8710-53d883dc994b",
+                                            "admin": false,
+                                            "created_at": "2023-02-13T23:35:00.992Z"  ,
+                                            "updated_at": "2023-02-13T23:35:00.992Z"  
+                                        }
+                                    ] 
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "User not a admin. Access to all users denied OR User not found."
+                    }
+                }
+            }                     
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": ["User"],
+                "summary": "Get a user",
+                "description": "Get a user profile",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User UUID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],            
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {                                   
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Henrique Sydney",
+                                        "email": "email.henrique@hotmail.com",  
+                                        "id": "0f7141ce-cc53-4527-8710-53d883dc884b",
+                                        "admin": false,
+                                        "created_at": "2023-02-13T22:35:00.992Z"  ,
+                                        "updated_at": "2023-02-13T22:35:00.992Z"  
+                                    } 
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found."
+                    }
+                }
+            }  
+        },
+        "/users/{id}/admin": {
+            "patch": {
+                "tags": ["User"],
+                "summary": "Turn user into admin",
+                "description": "Turn user into admin",
+                "parameters": [
+                    {
+                    "name": "user_id",
+                    "in": "path",
+                    "description": "User UUID",
+                    "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                ],            
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {                                   
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "name": "Henrique Sydney",
+                                        "email": "email.henrique@hotmail.com",  
+                                        "id": "0f7141ce-cc53-4527-8710-53d883dc884b",
+                                        "admin": true,
+                                        "created_at": "2023-02-13T22:35:00.992Z"  ,
+                                        "updated_at": "2023-02-13T22:35:00.992Z"  
+                                    } 
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description": "User not found."
+                    }
+                }
+            }  
+        }
+    } 
+ }

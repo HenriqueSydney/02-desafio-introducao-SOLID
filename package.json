@@ -9,13 +9,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.2.0",
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.20",
-    "@types/swagger-ui-express": "^4.1.2",   
+    "@types/swagger-ui-express": "^4.1.2",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "supertest": "^6.1.3",
