@@ -1,42 +1,68 @@
-import { User } from "../../model/User";
-import { IUsersRepository, ICreateUserDTO } from "../IUsersRepository";
+import { User } from '../../model/User'
+import { IUsersRepository, ICreateUserDTO } from '../IUsersRepository'
 
 class UsersRepository implements IUsersRepository {
-  private users: User[];
+  private users: User[]
 
-  private static INSTANCE: UsersRepository;
+  // eslint-disable-next-line no-use-before-define
+  private static INSTANCE: UsersRepository
 
   private constructor() {
-    this.users = [];
+    this.users = []
   }
 
   public static getInstance(): UsersRepository {
     if (!UsersRepository.INSTANCE) {
-      UsersRepository.INSTANCE = new UsersRepository();
+      UsersRepository.INSTANCE = new UsersRepository()
     }
 
-    return UsersRepository.INSTANCE;
+    return UsersRepository.INSTANCE
   }
 
   create({ name, email }: ICreateUserDTO): User {
-    // Complete aqui
+    const user = new User()
+
+    Object.assign(user, {
+      name,
+      email,
+      admin: false,
+      created_at: new Date(),
+      updated_at: new Date(),
+    })
+
+    this.users.push(user)
+
+    return user
   }
 
   findById(id: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.id === id)
+
+    return user
   }
 
   findByEmail(email: string): User | undefined {
-    // Complete aqui
+    const user = this.users.find((user) => user.email === email)
+
+    return user
   }
 
   turnAdmin(receivedUser: User): User {
-    // Complete aqui
+    const userIndex = this.users.findIndex((user) => user === receivedUser)
+
+    if (userIndex < 0) {
+      throw new Error('User not found')
+    }
+
+    this.users[userIndex].admin = true
+    this.users[userIndex].updated_at = new Date()
+
+    return this.users[userIndex]
   }
 
   list(): User[] {
-    // Complete aqui
+    return this.users
   }
 }
 
-export { UsersRepository };
+export { UsersRepository }
